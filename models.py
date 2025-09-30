@@ -9,7 +9,6 @@ class User(Base):
     username: Mapped[uniq_str]
     email: Mapped[uniq_str]
     password: Mapped[str]
-    profile_id: Mapped[int | None] = mapped_column(ForeignKey('profiles.id'))
     profile: Mapped['Profile'] = relationship(
         'Profile',
         back_populates='user',
@@ -44,6 +43,7 @@ class Profile(Base):
         back_populates='profile',
         uselist=False,
     )
+    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'), unique=True)
 
 
 class Post(Base):
